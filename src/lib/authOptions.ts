@@ -2,8 +2,7 @@ import { PrismaAdapter } from "@auth/prisma-adapter";
 import { PrismaClient } from "@prisma/client";
 import { NextAuthOptions } from "next-auth";
 import GithubProvider from "next-auth/providers/github";
-
-const prisma = new PrismaClient();
+import prisma from "./prisma";
 
 export const authOptions: NextAuthOptions = {
   // Secret for Next-auth, without this JWT encryption/decryption won't work
@@ -16,4 +15,8 @@ export const authOptions: NextAuthOptions = {
       clientSecret: process.env.GITHUB_APP_CLIENT_SECRET as string,
     }),
   ],
+  pages: {
+    // signIn: "/auth/entrar",
+    signOut: "/",
+  },
 };

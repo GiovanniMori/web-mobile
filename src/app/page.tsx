@@ -1,20 +1,14 @@
-"use client";
-import { useSession, signIn, signOut } from "next-auth/react";
+import Post from "@/components/post";
+import prisma from "@/lib/prisma";
 
-export default function Home() {
-  const { data: session } = useSession();
-  if (session) {
-    return (
-      <>
-        Signed in as {session.user?.email} <br />
-        <button onClick={() => signOut()}>Sign out</button>
-      </>
-    );
-  }
+export default async function Home() {
+  const posts = await prisma.posts.findMany({});
+
   return (
     <>
-      Not signed in <br />
-      <button onClick={() => signIn()}>Sign in</button>
+      {posts.map((post) => (
+        <Post post={post} key={post.id} />
+      ))}
     </>
   );
 }
