@@ -36,13 +36,18 @@ model Session {
 }
 
 model User {
-  id            String    @id @default(cuid())
+  id            String      @id @default(cuid())
   name          String?
-  email         String?   @unique
+  email         String?     @unique
   emailVerified DateTime?
   image         String?
   accounts      Account[]
   sessions      Session[]
+  posts         Posts[]
+  communities   Community[]
+  comments      Comments[]
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
 }
 
 model VerificationToken {
@@ -58,6 +63,8 @@ model Community {
   name        String
   description String
   posts       Posts[]
+  User        User?   @relation(fields: [userId], references: [id])
+  userId      String?
 }
 
 model Posts {
@@ -71,6 +78,8 @@ model Posts {
   comments    Comments[]
   Community   Community?   @relation(fields: [communityId], references: [id])
   communityId String?
+  User        User?        @relation(fields: [userId], references: [id])
+  userId      String?
 }
 
 model Categories {
@@ -87,4 +96,6 @@ model Comments {
   updatedAt DateTime @updatedAt
   posts     Posts    @relation(fields: [postId], references: [id])
   postId    String
+  User      User?    @relation(fields: [userId], references: [id])
+  userId    String?
 }
