@@ -2,8 +2,6 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { NextUiProvider } from "@/providers/nextui";
-import Navbar from "@/components/navbar";
-import LeftSideBar from "@/components/leftSideBar";
 import NextAuthProvider from "@/providers/auth";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -21,13 +19,7 @@ export default function RootLayout({
     <html lang="pt-br">
       <body className={inter.className}>
         <NextUiProvider>
-          <NextAuthProvider>
-            <Navbar />
-            <div className="flex justify-center  gap-4">
-              <LeftSideBar />
-              {children}
-            </div>
-          </NextAuthProvider>
+          <NextAuthProvider>{children}</NextAuthProvider>
         </NextUiProvider>
       </body>
     </html>
